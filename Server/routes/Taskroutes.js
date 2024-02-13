@@ -1,2 +1,4 @@
 const router = require("express").Router();
-router.get("/get", (req, res) => {});
+const { Getsongs } = require("../Taskcontrols/Taskcontrollers");
+router.get("/get", Getsongs);
+module.exports = router;

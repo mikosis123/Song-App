@@ -1,21 +1,6 @@
-const mongoose = require("mongoose");
-
-const taskschema = new mongoose.Schema({
-  Title: {
-    type: String,
-    required: true,
-  },
-  Artist: {
-    type: String,
-    required: true,
-  },
-  Album: {
-    type: String,
-    required: true,
-  },
-  Genre: {
-    type: Date,
-    default: Date.now,
-  },
-});
-module.export = mongoose.model("Songs", taskschema);
+const Songmodel = require("./Songsmodel");
+module.exports.Getsongs = async (req, res) => {
+  // const songs = await Songmodel.find();
+  // res.send(songs);
+  res.send("hiiiiiii");
+};
