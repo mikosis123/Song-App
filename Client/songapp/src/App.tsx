@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Sidebar from "./Components/Sidebar";
+import Songs from "./Components/Songs";
 
 function App() {
   return (
@@ -9,7 +10,9 @@ function App() {
       <div className="min-h-screen relative mr-[40px] flex justify-between align-center ">
         <Sidebar />
       </div>
-      <div className="w-[72%] h-[90%] mt-8 "></div>
+      <div className="w-[72%] h-[90%] mt-8 ">
+        <Songs />
+      </div>
     </div>
   );
 }

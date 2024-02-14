@@ -11,7 +11,12 @@ type MenuChild = {
 
 const SideMenu = ({ Text, PageComponent, link, OnClick }: MenuChild) => {
   return (
-    <a href={link}>
+    <a
+      href={link}
+      onClick={(e) => {
+        e.preventDefault();
+      }}
+    >
       <div
         onClick={() => {
           OnClick();
