@@ -15,3 +15,23 @@ module.exports.Postsongs = async (req, res) => {
       res.send({ error: err, msg: "Data has not been inserted successfully" })
     );
 };
+module.exports.Updatesongs = async (req, res) => {
+  const { task } = req.body;
+  const { id } = req.params.id;
+  Songmodel.findByIdAndUpdate(id, { task })
+    .then(() => res.send("updated successfuly"))
+    .catch(
+      (err) => console.log("Data has not been inserted successfully"),
+      res.send({ error: err, msg: "Data has not been inserted successfully" })
+    );
+};
+module.exports.Deletesongs = async (req, res) => {
+  const { task } = req.body;
+  const { id } = req.params.id;
+  Songmodel.findByIdAndDelete(id, { task })
+    .then(() => res.send("delated successfuly"))
+    .catch(
+      (err) => console.log("Data has not been inserted successfully"),
+      res.send({ error: err, msg: "Data has not been inserted successfully" })
+    );
+};
