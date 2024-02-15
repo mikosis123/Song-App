@@ -15,15 +15,13 @@ function App() {
         <Sidebar />
       </div>
       <div className="w-[72%] h-[90%] mt-8 ">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Songs />}>
-              <Route path="/Artists" element={<Artists />} />
-              <Route path="/Albums" element={<Albums />} />
-              <Route path="/Geners" element={<Geners />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Songs />}>
+            <Route path="/Artists" element={<Artists />} />
+            <Route path="/Albums" element={<Albums />} />
+            <Route path="/Geners" element={<Geners />} />
+          </Route>
+        </Routes>
       </div>
     </div>
   );

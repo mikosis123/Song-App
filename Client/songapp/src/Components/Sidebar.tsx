@@ -7,14 +7,14 @@ import { Employeessvg } from "./Icons//Employeessvg";
 import { Referalssvg } from "./Icons//Referalssvg";
 import { Logoutsvg } from "./Icons//Logoutsvg";
 import { Profilesvg } from "./Icons/Profilesvg";
-// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
-  // const history = useHistory();
+  const naviate = useNavigate();
   const handleMenuClick = (menuLink: any) => {
     setActiveMenu(menuLink);
-    // history.push("/edit-page");
+    naviate(menuLink);
   };
   return (
     <div>
