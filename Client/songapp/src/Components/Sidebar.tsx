@@ -7,12 +7,14 @@ import { Employeessvg } from "./Icons//Employeessvg";
 import { Referalssvg } from "./Icons//Referalssvg";
 import { Logoutsvg } from "./Icons//Logoutsvg";
 import { Profilesvg } from "./Icons/Profilesvg";
+// import { useHistory } from "react-router-dom";
 
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
-
+  // const history = useHistory();
   const handleMenuClick = (menuLink: any) => {
     setActiveMenu(menuLink);
+    // history.push("/edit-page");
   };
   return (
     <div>
@@ -23,9 +25,9 @@ const Sidebar = () => {
               link={"/Songs"}
               Text="songs"
               PageComponent={
-                <Dashboardsvg isActive={activeMenu === "/dashboard"} />
+                <Dashboardsvg isActive={activeMenu === "/Songs"} />
               }
-              OnClick={() => handleMenuClick("/dashboard")}
+              OnClick={() => handleMenuClick("/Songs")}
             />
           </div>
           <div>

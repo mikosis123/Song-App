@@ -6,6 +6,7 @@ import Sidebar from "./Components/Sidebar";
 import Songs from "./Components/Songs";
 import Artists from "./Components/Artists";
 import Geners from "./Components/Geners";
+import Albums from "./Components/Albums";
 
 function App() {
   return (
@@ -17,9 +18,9 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Songs />}>
-              <Route index element={<Songs />} />
-              <Route path="blogs" element={<Artists />} />
-              <Route path="contact" element={<Geners />} />
+              <Route path="/Artists" element={<Artists />} />
+              <Route path="/Albums" element={<Albums />} />
+              <Route path="/Geners" element={<Geners />} />
             </Route>
           </Routes>
         </BrowserRouter>
