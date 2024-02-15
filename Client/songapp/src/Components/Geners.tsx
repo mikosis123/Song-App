@@ -1,11 +1,10 @@
 import React from "react";
+import Showcard from "./Showcard";
 
 const Geners = () => {
   return (
-    <div>
-      <h1 className="font-bold py-4 text-3xl  w-full h-screen text-black">
-        Geners
-      </h1>
+    <div className="flex justify-centern items-center h-screen w-full">
+      <Showcard />
     </div>
   );
 };
