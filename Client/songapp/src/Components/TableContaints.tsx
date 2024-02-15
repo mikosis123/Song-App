@@ -1,7 +1,7 @@
 import axios from "axios";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { baseurl } from "../axios/Baseurl";
+
 interface TableRowProps {
   itemName: string;
   color: string;
@@ -17,20 +17,46 @@ const TableContaints = ({
   price,
   onEditClick,
 }: TableRowProps) => {
-  const [Title, setTitle] = useState([]);
-  const [input, setInput] = useState<string>("");
+  const [formData, setFormData] = useState({
+    Title: "",
+    Artist: "",
+    Album: "",
+    Genre: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const addsong = () => {
+    axios
+      .post(`${baseurl}/save`, formData)
+      .then((res) => {
+        console.log(res.data);
+        // You might want to do something after successful submission, e.g., clear form fields
+        setFormData({
+          Title: "",
+          artist: "",
+          album: "",
+          genre: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Error adding song:", error);
+      });
+  };
 
   useEffect(() => {
-    axios.get(`${baseurl}/get`).then((res) => {
-      console.log(res.data);
-    });
-  }, [input]);
-  const addsong = () => {
-    axios.post(`${baseurl}/save`, { Title: input }).then((res) => {
-      console.log(res.data);
-      setInput("");
-    });
-  };
+    // Fetch data if needed
+    // axios.get(`${baseurl}/get`).then((res) => {
+    //   console.log(res.data);
+    // });
+  }, []); // Only run once when component mounts
+
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th
@@ -57,15 +83,39 @@ const TableContaints = ({
         >
           Delete
         </a>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="enter song"
-        ></input>
-        <button type="button" onClick={addsong}>
-          submit
-        </button>
+        <div>
+          <input
+            type="text"
+            name="Title"
+            value={formData.Title}
+            onChange={handleChange}
+            placeholder="Title"
+          />
+          <input
+            type="text"
+            name="artist"
+            value={formData.artist}
+            onChange={handleChange}
+            placeholder="Artist"
+          />
+          <input
+            type="text"
+            name="album"
+            value={formData.album}
+            onChange={handleChange}
+            placeholder="Album"
+          />
+          <input
+            type="text"
+            name="genre"
+            value={formData.genre}
+            onChange={handleChange}
+            placeholder="Genre"
+          />
+          <button type="button" onClick={addsong}>
+            Submit
+          </button>
+        </div>
       </td>
     </tr>
   );

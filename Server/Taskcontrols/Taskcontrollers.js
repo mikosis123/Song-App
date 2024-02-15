@@ -4,9 +4,9 @@ module.exports.Getsongs = async (req, res) => {
   res.send(songs);
 };
 module.exports.Postsongs = async (req, res) => {
-  const { Title } = req.body;
+  const { Title, Artist, Album, Genre } = req.body;
   try {
-    const data = await Songmodel.create({ Title });
+    const data = await Songmodel.create({ Title, Artist, Album, Genre });
     console.log("Data has been inserted successfully");
     res.status(200).send(data);
   } catch (err) {
