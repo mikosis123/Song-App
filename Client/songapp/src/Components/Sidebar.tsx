@@ -35,25 +35,23 @@ const Sidebar = () => {
               link={"/Artists"}
               Text="Artists"
               PageComponent={
-                <Platformssvg isActive={activeMenu === "/platforms"} />
+                <Platformssvg isActive={activeMenu === "/Artists"} />
               }
-              OnClick={() => handleMenuClick("/platforms")}
+              OnClick={() => handleMenuClick("/Artists")}
             />
           </div>
 
           <SideMenu
-            link={"/Genres"}
+            link={"/Albums"}
             Text="Albums"
-            PageComponent={<Profilesvg isActive={activeMenu === "/profile"} />}
-            OnClick={() => handleMenuClick("/profile")}
+            PageComponent={<Profilesvg isActive={activeMenu === "/Albums"} />}
+            OnClick={() => handleMenuClick("/Albums")}
           />
           <SideMenu
-            link={"/referal-link"}
-            Text="Referal-link"
-            PageComponent={
-              <Referalssvg isActive={activeMenu === "/referal-link"} />
-            }
-            OnClick={() => handleMenuClick("/referal-link")}
+            link={"/Geners"}
+            Text="Geners"
+            PageComponent={<Referalssvg isActive={activeMenu === "/Geners"} />}
+            OnClick={() => handleMenuClick("/Geners")}
           />
           <SideMenu
             link={"/logout"}

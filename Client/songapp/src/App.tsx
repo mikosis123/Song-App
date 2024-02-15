@@ -14,13 +14,12 @@ function App() {
       <div className="min-h-screen relative mr-[40px] flex justify-between align-center ">
         <Sidebar />
       </div>
-      <div className="w-[72%] h-[90%] mt-8 ">
+      <div className="w-[72%] h-[90%]  ">
         <Routes>
-          <Route path="/" element={<Songs />}>
-            <Route path="/Artists" element={<Artists />} />
-            <Route path="/Albums" element={<Albums />} />
-            <Route path="/Geners" element={<Geners />} />
-          </Route>
+          <Route path="/Artists" element={<Artists />} />
+          <Route path="/Songs" element={<Songs />} />
+          <Route path="/Albums" element={<Albums />} />
+          <Route path="/Geners" element={<Geners />} />
         </Routes>
       </div>
     </div>
