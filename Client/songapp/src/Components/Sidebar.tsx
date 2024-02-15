@@ -20,7 +20,7 @@ const Sidebar = () => {
         <div className="flex flex-col align-center justify-center">
           <div>
             <SideMenu
-              link={"/dashboard"}
+              link={"/Songs"}
               Text="songs"
               PageComponent={
                 <Dashboardsvg isActive={activeMenu === "/dashboard"} />
@@ -30,7 +30,7 @@ const Sidebar = () => {
           </div>
           <div>
             <SideMenu
-              link={"/platforms"}
+              link={"/Artists"}
               Text="Artists"
               PageComponent={
                 <Platformssvg isActive={activeMenu === "/platforms"} />
@@ -40,7 +40,7 @@ const Sidebar = () => {
           </div>
 
           <SideMenu
-            link={"/profile"}
+            link={"/Genres"}
             Text="Albums"
             PageComponent={<Profilesvg isActive={activeMenu === "/profile"} />}
             OnClick={() => handleMenuClick("/profile")}
