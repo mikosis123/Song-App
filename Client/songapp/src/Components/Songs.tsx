@@ -3,8 +3,10 @@ import TableContaints from "./TableContaints";
 
 const Songs = () => {
   return (
-    <div className="bg-white w-full h-screen">
-      <div className="bg-blue-500 h-[300px]"></div>
+    <div className="bg-white w-full h-[100vh]">
+      <div className="bg-blue-500 h-[300px] flex justify-center items-center text-6xl text-white font-extrabold">
+        List of Songs
+      </div>
       <div className="relative  shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left  text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -66,35 +68,6 @@ const Songs = () => {
             </tr>
           </thead>
           <tbody className="">
-            <TableContaints
-              itemName="Apple MacBook Pro 17"
-              color="Silver"
-              category="Laptop"
-              price={2999}
-              onEditClick={() => {}} // Pass the onEditClick handler
-            />
-
-            <TableContaints
-              itemName="Apple MacBook Pro 17"
-              color="Silver"
-              category="Laptop"
-              price={2999}
-              onEditClick={() => {}} // Pass the onEditClick handler
-            />
-            <TableContaints
-              itemName="Apple MacBook Pro 17"
-              color="Silver"
-              category="Laptop"
-              price={2999}
-              onEditClick={() => {}} // Pass the onEditClick handler
-            />
-            <TableContaints
-              itemName="Apple MacBook Pro 17"
-              color="Silver"
-              category="Laptop"
-              price={2999}
-              onEditClick={() => {}} // Pass the onEditClick handler
-            />
             <TableContaints
               itemName="Apple MacBook Pro 17"
               color="Silver"
