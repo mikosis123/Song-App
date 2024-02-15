@@ -9,6 +9,9 @@ app.use(corse());
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
+app.post("/", (req, res) => {
+  res.send("Server is running");
+});
 mongoose
   .connect(process.env.MONGO_DB)
   .then(() => console.log("connected to db"))

@@ -14,4 +14,5 @@ module.exports.Postsongs = async (req, res) => {
       (err) => console.log("Data has not been inserted successfully"),
       res.send({ error: err, msg: "Data has not been inserted successfully" })
     );
+  res.send("song added successfully");
 };
