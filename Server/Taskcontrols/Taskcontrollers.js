@@ -18,8 +18,8 @@ module.exports.Postsongs = async (req, res) => {
 };
 module.exports.Updatesongs = async (req, res) => {
   const { id } = req.params;
-  const { Title } = req.body;
-  Songmodel.findByIdAndUpdate(id, { Title })
+  const { Title, Artist, Album, Genre } = req.body;
+  Songmodel.findByIdAndUpdate(id, { Title, Artist, Album, Genre })
     .then(
       (data) => console.log("Data has been updated successfully"),
       res.status("updated successfuly")
@@ -32,14 +32,14 @@ module.exports.Updatesongs = async (req, res) => {
 };
 module.exports.Delatesongs = async (req, res) => {
   const { id } = req.params;
-  Songmodel.findByIdAndDelete(id)
-    .then(
-      (data) => console.log("Data has been delated successfully"),
-      res.status("delated successfuly")
-    )
-    .catch(
-      (err) => console.log("Data has not been delated successfully"),
-      res.send("Data has not been delated successfully")
-    );
-  res.send("song updated successfully");
+  try {
+    const data = await Songmodel.findByIdAndDelete(id);
+    console.log("Data has been delated successfully");
+    res.send("Data has been delated successfully");
+  } catch (err) {
+    console.log("Data has not been delated successfully", err);
+    res
+      .status(500)
+      .send({ error: err, msg: "Data has not been delated successfully" });
+  }
 };
