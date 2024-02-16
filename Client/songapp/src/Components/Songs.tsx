@@ -1,7 +1,25 @@
 import React from "react";
 import TableContaints from "./TableContaints";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { baseurl } from "../axios/Baseurl";
+interface Song {
+  _id: number;
+  Title: string;
+  Artist: string;
+  Album: string;
+  Genre: string;
+}
 const Songs = () => {
+  const [data, setData] = useState<Song[]>([]);
+
+  useEffect(() => {
+    axios.get(`${baseurl}/get`).then((res) => {
+      console.log(res.data);
+      setData(res.data);
+    });
+  }, []);
+  console.log(data);
   return (
     <div className="bg-white w-full h-[100vh]">
       <div className="bg-blue-500 h-[300px] flex justify-center items-center text-6xl text-white font-extrabold">
@@ -68,13 +86,17 @@ const Songs = () => {
             </tr>
           </thead>
           <tbody className="">
-            <TableContaints
-              itemName="Apple MacBook Pro 17"
-              color="Silver"
-              category="Laptop"
-              price={2999}
-              onEditClick={() => {}} // Pass the onEditClick handler
-            />
+            {data.map((item) => (
+              <TableContaints
+                key={item._id}
+                id={item._id}
+                Title={item.Title}
+                Artist={item.Artist}
+                Album={item.Album}
+                Genre={item.Genre}
+                onEditClick={() => {}} // Pass the onEditClick handler
+              />
+            ))}
           </tbody>
         </table>
       </div>
