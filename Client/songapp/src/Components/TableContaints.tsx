@@ -1,20 +1,23 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { baseurl } from "../axios/Baseurl";
+import Artists from "./Artists";
 
 interface TableRowProps {
-  itemName: string;
-  color: string;
-  category: string;
-  price: number;
+  Title: string;
+  Artist: string;
+  Album: string;
+  Genre: string;
+  id: number;
   onEditClick?: () => void; // Optional prop for handling edit click
 }
 
 const TableContaints = ({
-  itemName,
-  color,
-  category,
-  price,
+  Title,
+  Artist,
+  Album,
+  Genre,
+  id,
   onEditClick,
 }: TableRowProps) => {
   const [formData, setFormData] = useState({
@@ -32,6 +35,17 @@ const TableContaints = ({
     }));
   };
 
+  const Removesong = () => {
+    axios
+      .delete(`${baseurl}/delete/${id}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error("Error deleting song:", error);
+      });
+    console.log(id);
+  };
   const addsong = () => {
     axios
       .post(`${baseurl}/save`, formData)
@@ -40,9 +54,9 @@ const TableContaints = ({
         // You might want to do something after successful submission, e.g., clear form fields
         setFormData({
           Title: "",
-          artist: "",
-          album: "",
-          genre: "",
+          Artist: "",
+          Album: "",
+          Genre: "",
         });
       })
       .catch((error) => {
@@ -50,24 +64,19 @@ const TableContaints = ({
       });
   };
 
-  useEffect(() => {
-    // Fetch data if needed
-    // axios.get(`${baseurl}/get`).then((res) => {
-    //   console.log(res.data);
-    // });
-  }, []); // Only run once when component mounts
+  // Only run once when component mounts
 
   return (
-    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+    <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th
         scope="row"
         className="pr-64 text-2xl px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
       >
-        {itemName}
+        {Title}
       </th>
-      <td className="px-6 py-4 text-xl">{color}</td>
-      <td className="px-6 py-4 text-xl">{category}</td>
-      <td className="px-6 py-4 text-xl">${price}</td>
+      <td className="px-6 py-4 text-xl">{Artist}</td>
+      <td className="px-6 py-4 text-xl">{Album}</td>
+      <td className="px-6 py-4 text-xl">${Genre}</td>
       <td className="px-6 py-4 text-right text-xl">
         <a
           href="#"
@@ -76,46 +85,45 @@ const TableContaints = ({
         >
           Edit
         </a>
-        <a
-          href="#"
+        <button
           className="font-medium px-6 text-blue-600 dark:text-blue-500 hover:underline"
-          onClick={onEditClick}
+          onClick={Removesong}
         >
           Delete
-        </a>
-        <div>
-          <input
-            type="text"
-            name="Title"
-            value={formData.Title}
-            onChange={handleChange}
-            placeholder="Title"
-          />
-          <input
-            type="text"
-            name="artist"
-            value={formData.artist}
-            onChange={handleChange}
-            placeholder="Artist"
-          />
-          <input
-            type="text"
-            name="album"
-            value={formData.album}
-            onChange={handleChange}
-            placeholder="Album"
-          />
-          <input
-            type="text"
-            name="genre"
-            value={formData.genre}
-            onChange={handleChange}
-            placeholder="Genre"
-          />
-          <button type="button" onClick={addsong}>
-            Submit
-          </button>
-        </div>
+        </button>
+        {/* <div className="flex justify-center items-center">
+        <input
+          type="text"
+          name="Title"
+          value={formData.Title}
+          onChange={handleChange}
+          placeholder="Title"
+        />
+        <input
+          type="text"
+          name="Artist"
+          value={formData.Artist}
+          onChange={handleChange}
+          placeholder="Artist"
+        />
+        <input
+          type="text"
+          name="Album"
+          value={formData.Album}
+          onChange={handleChange}
+          placeholder="Album"
+        />
+        <input
+          type="text"
+          name="Genre"
+          value={formData.Genre}
+          onChange={handleChange}
+          placeholder="Genre"
+        />
+        <button type="button" onClick={addsong}>
+          Submit
+        </button>
+      </div> */}
       </td>
     </tr>
   );
