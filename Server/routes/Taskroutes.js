@@ -8,7 +8,7 @@ const {
 } = require("../Taskcontrols/Taskcontrollers");
 router.get("/get", Getsongs);
 router.post("/save", Postsongs);
-router.put("/update", Updatesongs);
-router.delete("/delate", Delatesongs);
+router.put("/update/:id", Updatesongs);
+router.delete("/delete/:id", Delatesongs);
 
 module.exports = router;
