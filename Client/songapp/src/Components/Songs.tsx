@@ -1,8 +1,16 @@
 import React from "react";
 import TableContaints from "./TableContaints";
-import axios from "axios";
+
 import { useState, useEffect } from "react";
-import { baseurl } from "../axios/Baseurl";
+
+import {
+  useGetSongQuery,
+  useCreateSongMutation,
+  useUpdateSongMutation,
+  useDeleteSongMutation,
+} from "../Features/song.api";
+import { create } from "domain";
+
 interface Song {
   _id: number;
   Title: string;
@@ -11,20 +19,57 @@ interface Song {
   Genre: string;
 }
 const Songs = () => {
-  const [data, setData] = useState<Song[]>([]);
+  const [songadd, setsongadd] = useState(false);
+  const [formData, setFormData] = useState({
+    Title: "",
+    Artist: "",
+    Album: "",
+    Genre: "",
+  });
+  const { data: songs } = useGetSongQuery(undefined);
+  const [createSong, { isLoading }] = useCreateSongMutation();
+  const [updateSong, { isLoading: isUpdating }] = useUpdateSongMutation();
+  const [deleteSong, { isLoading: isDeleting }] = useDeleteSongMutation();
 
-  useEffect(() => {
-    axios.get(`${baseurl}/get`).then((res) => {
-      console.log(res.data);
-      setData(res.data);
-    });
-  }, []);
-  console.log(data);
+  const handleAddSong = () => {
+    setsongadd(false);
+  };
+
+  const addsong = async (data: any) => {
+    console.log(formData);
+    try {
+      await createSong(formData);
+      setsongadd(!songadd);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updateSongFunction = async (data: any) => {
+    try {
+      await updateSong(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const songAdder = () => {
+    setsongadd(!songadd);
+  };
+
   return (
     <div className="bg-white w-full h-[100vh]">
       <div className="bg-blue-500 h-[300px] flex justify-center items-center ">
         <h1 className="text-6xl text-white font-extrabold">List of Songs</h1>
-        <button className="bg-red-500 ml-auto mt-auto h-[70px] w-[210px] rounded">
+        <button
+          onClick={songAdder}
+          className=" mt-auto ml-auto text-white hover:text-black border border-black hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-large rounded-lg text-md px-7 py-3 text-center me-4 mb-4   "
+        >
           Add Song
         </button>
       </div>
@@ -90,8 +135,62 @@ const Songs = () => {
               </th>
             </tr>
           </thead>
+          <tbody className="bg-gray-200">
+            {songadd && (
+              <tr>
+                <th></th>
+                <th>
+                  <input
+                    className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="text"
+                    name="Title"
+                    value={formData.Title}
+                    onChange={handleChange}
+                    placeholder="Title"
+                  />
+                </th>
+                <th>
+                  <input
+                    className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="text"
+                    name="Artist"
+                    value={formData.Artist}
+                    onChange={handleChange}
+                    placeholder="Artist"
+                  />
+                </th>
+                <th>
+                  <input
+                    className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="text"
+                    name="Album"
+                    value={formData.Album}
+                    onChange={handleChange}
+                    placeholder="Album"
+                  />
+                </th>
+                <th>
+                  <input
+                    className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="text"
+                    name="Genre"
+                    value={formData.Genre}
+                    onChange={handleChange}
+                    placeholder="Genre"
+                  />
+                </th>
+                <button
+                  className="text-white mx-8 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                  type="button"
+                  onClick={addsong}
+                >
+                  Add
+                </button>
+              </tr>
+            )}
+          </tbody>
           <tbody className="">
-            {data.map((item) => (
+            {songs?.map((item: any) => (
               <TableContaints
                 key={item._id}
                 id={item._id}
@@ -99,7 +198,7 @@ const Songs = () => {
                 Artist={item.Artist}
                 Album={item.Album}
                 Genre={item.Genre}
-                onEditClick={() => {}} // Pass the onEditClick handler
+                onEditClick={() => updateSongFunction(item)}
               />
             ))}
           </tbody>

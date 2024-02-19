@@ -29,6 +29,7 @@ const TableContaints = ({
     Album: "",
     Genre: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,23 +50,34 @@ const TableContaints = ({
       });
     console.log(id);
   };
-  const addsong = () => {
+  const handleUpdateSong = () => {
     axios
-      .post(`${baseurl}/save`, formData)
+      .put(`${baseurl}/update/${id}`, formData)
       .then((res) => {
         console.log(res.data);
-        // You might want to do something after successful submission, e.g., clear form fields
-        setFormData({
-          Title: "",
-          Artist: "",
-          Album: "",
-          Genre: "",
-        });
+        setIsEditing(false);
       })
       .catch((error) => {
-        console.error("Error adding song:", error);
+        console.error("Error updating song:", error);
       });
   };
+  // const addsong = () => {
+  //   axios
+  //     .post(`${baseurl}/save`, formData)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       // You might want to do something after successful submission, e.g., clear form fields
+  //       setFormData({
+  //         Title: "",
+  //         Artist: "",
+  //         Album: "",
+  //         Genre: "",
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error adding song:", error);
+  //     });
+  // };
 
   // Only run once when component mounts
 
@@ -79,7 +91,7 @@ const TableContaints = ({
         className="pr-64 flex  justify-center gap-8 text-2xl px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
       >
         {Title}
-        <Play />
+        {/* <Play /> */}
         {/* <i className=" color:blue fa-solid fa-play"></i> */}
       </th>
       <td className="px-6 py-4 text-xl">{Artist}</td>
@@ -99,39 +111,6 @@ const TableContaints = ({
         >
           Delete
         </button>
-        {/* <div className="flex justify-center items-center">
-          <input
-            type="text"
-            name="Title"
-            value={formData.Title}
-            onChange={handleChange}
-            placeholder="Title"
-          />
-          <input
-            type="text"
-            name="Artist"
-            value={formData.Artist}
-            onChange={handleChange}
-            placeholder="Artist"
-          />
-          <input
-            type="text"
-            name="Album"
-            value={formData.Album}
-            onChange={handleChange}
-            placeholder="Album"
-          />
-          <input
-            type="text"
-            name="Genre"
-            value={formData.Genre}
-            onChange={handleChange}
-            placeholder="Genre"
-          />
-          <button type="button" onClick={addsong}>
-            Submit
-          </button>
-        </div> */}
       </td>
     </tr>
   );
