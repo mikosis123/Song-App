@@ -4,16 +4,44 @@ module.exports.Getsongs = async (req, res) => {
   res.send(songs);
 };
 module.exports.Postsongs = async (req, res) => {
-  const { task } = req.body;
-  Songmodel.create({ task })
+  const { Title, Artist, Album, Genre } = req.body;
+  try {
+    const data = await Songmodel.create({ Title, Artist, Album, Genre });
+    console.log("Data has been inserted successfully");
+    res.status(200).send(data);
+  } catch (err) {
+    console.log("Data has not been inserted successfully", err);
+    res
+      .status(500)
+      .send({ error: err, msg: "Data has not been inserted successfully" });
+  }
+};
+module.exports.Updatesongs = async (req, res) => {
+  const { id } = req.params;
+  const { Title, Artist, Album, Genre } = req.body;
+  Songmodel.findByIdAndUpdate(id, { Title, Artist, Album, Genre })
     .then(
-      (data) => console.log("Data has been inserted successfully"),
-      res.status(200).send(data)
+      (data) => console.log("Data has been updated successfully"),
+      res.status("updated successfuly")
     )
     .catch(
-      (err) => console.log("Data has not been inserted successfully"),
-      res.send({ error: err, msg: "Data has not been inserted successfully" })
+      (err) => console.log("Data has not been updated successfully"),
+      res.send("Data has not been updated successfully")
     );
+  res.send("song updated successfully");
+};
+module.exports.Delatesongs = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await Songmodel.findByIdAndDelete(id);
+    console.log("Data has been delated successfully");
+    res.send("Data has been delated successfully");
+  } catch (err) {
+    console.log("Data has not been delated successfully", err);
+    res
+      .status(500)
+      .send({ error: err, msg: "Data has not been delated successfully" });
+  }
 };
 module.exports.Updatesongs = async (req, res) => {
   const { task } = req.body;
