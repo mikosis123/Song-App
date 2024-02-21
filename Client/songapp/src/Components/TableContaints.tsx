@@ -41,8 +41,6 @@ const TableContaints = ({ Title, Artist, Album, Genre, id }: TableRowProps) => {
     }));
   };
 
-  const songIdToDelete = { id };
-
   const [deleteSongMutation] = useDeleteSongMutation();
 
   const handleDeleteSong = async () => {
