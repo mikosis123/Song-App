@@ -20,15 +20,19 @@ export const songApi = createApi({
       },
       invalidatesTags: ["song"],
     }),
-    updateSong: builder.mutation<any, any>({
-      query: (data) => {
-        return { url: "update/:id", method: "PUT", body: data };
-      },
+    updateSong: builder.mutation<any, { id: string; data: any }>({
+      // Specify the types for id and data
+      query: ({ id, data }) => ({
+        // Destructure id and data from the argument
+        url: `update/${id}`, // Use the id to construct the URL
+        method: "PUT",
+        body: data, // Pass the data as the body of the request
+      }),
       invalidatesTags: ["song"],
     }),
     deleteSong: builder.mutation<any, string>({
       query: (id) => {
-        return { url: "/delete/:id", method: "DELETE" };
+        return { url: `delete/${id}`, method: "DELETE" };
       },
       invalidatesTags: ["song"],
     }),
