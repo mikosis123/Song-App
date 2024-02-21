@@ -80,6 +80,7 @@ const Songs = () => {
               <th scope="col" className="px-6 py-3">
                 Title
               </th>
+              <th></th>
 
               <th scope="col" className="px-6 py-3">
                 <div className="flex items-center">
@@ -148,6 +149,7 @@ const Songs = () => {
                     placeholder="Title"
                   />
                 </th>
+                <th>ff</th>
                 <th>
                   <input
                     className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -177,6 +179,14 @@ const Songs = () => {
                     onChange={handleChange}
                     placeholder="Genre"
                   />
+                </th>
+                <th>
+                  <input
+                    className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  "
+                    type="file"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="file"></label>
                 </th>
                 <button
                   className="text-white mx-8 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"

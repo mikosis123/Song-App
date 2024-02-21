@@ -4,6 +4,7 @@ import { baseurl } from "../axios/Baseurl";
 import image from "../Components/pexels-elviss-railijs-bitāns-1389429.jpg";
 import Artists from "./Artists";
 import Play from "./Icons/Play";
+import { FaPauseCircle, FaPlay, FaPlayCircle } from "react-icons/fa";
 import {
   useUpdateSongMutation,
   useDeleteSongMutation,
@@ -30,6 +31,7 @@ const TableContaints = ({ Title, Artist, Album, Genre, id }: TableRowProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [updateSongMutation] = useUpdateSongMutation();
   const [deleteSong, { isLoading: isDeleting }] = useDeleteSongMutation();
+  const [play, setPlay] = useState(true);
   const handleEditClick = () => {
     setIsEditing(!isEditing);
   };
@@ -84,6 +86,7 @@ const TableContaints = ({ Title, Artist, Album, Genre, id }: TableRowProps) => {
               placeholder="Title"
             />
           </th>
+
           <th>
             <input
               className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -125,7 +128,14 @@ const TableContaints = ({ Title, Artist, Album, Genre, id }: TableRowProps) => {
           {/* <i className=" color:blue fa-solid fa-play"></i> */}
         </th>
       )}
-
+      <th
+        className="cursor-pointer"
+        onClick={() => {
+          setPlay(!play);
+        }}
+      >
+        {play ? <FaPlayCircle /> : <FaPauseCircle />}
+      </th>
       <td className="px-6 py-4 text-xl">{Artist}</td>
       <td className="px-6 py-4 text-xl">{Album}</td>
       <td className="px-6 py-4 text-xl">{Genre}</td>
