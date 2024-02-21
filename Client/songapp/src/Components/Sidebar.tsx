@@ -18,7 +18,7 @@ const Sidebar = () => {
   };
   return (
     <div>
-      <div className="bg-white my-auto ml-10 w-[346px] h-[100vh] rounded-md flex align-center justify-center drop-shadow-2xl">
+      <div className="bg-black my-auto  w-[346px] h-[100vh] rounded-md flex align-center justify-center drop-shadow-2xl">
         <div className="flex flex-col align-center justify-center">
           <div>
             <SideMenu
