@@ -9,7 +9,6 @@ import {
   useUpdateSongMutation,
   useDeleteSongMutation,
 } from "../Features/song.api";
-import { create } from "domain";
 
 interface Song {
   _id: number;
@@ -40,17 +39,17 @@ const Songs = () => {
     try {
       await createSong(formData);
       setsongadd(!songadd);
+      setFormData({
+        Title: "",
+        Artist: "",
+        Album: "",
+        Genre: "",
+      });
     } catch (error) {
       console.log(error);
     }
   };
-  const updateSongFunction = async (data: any) => {
-    try {
-      await updateSong(formData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -198,7 +197,6 @@ const Songs = () => {
                 Artist={item.Artist}
                 Album={item.Album}
                 Genre={item.Genre}
-                onEditClick={() => updateSongFunction(item)}
               />
             ))}
           </tbody>
