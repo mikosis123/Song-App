@@ -1,17 +1,16 @@
 import React from "react";
 import image from "../Components/pexels-elviss-railijs-bitāns-1389429.jpg";
+import ArtistCard from "./ArtistCard";
+import { useGetSongQuery } from "../Features/song.api";
 
 const Artists = () => {
+  const { data: artist } = useGetSongQuery(undefined);
+  console.log(artist);
   return (
-    <div
-      className="bg-white flex justify-center item-center
-     h-[100vh]"
-    >
-      <div className="w-[50vh] h-[60vh] bg-blue-500 b-black my-auto flex justify-center ">
-        <img src={image} alt="" />
-        <h1>artist</h1>
-        <h2>dicription </h2>
-      </div>
+    <div className="bg-gradient-to-b overflow-hidden overflow-x-auto from-gray-300 to-blue-400 flex gap-4 flex-wrap justify-center items-center h-screen w-full">
+      {artist?.map((item: any) => {
+        return <ArtistCard key={item.id} artist={item.Artist} />;
+      })}
     </div>
   );
 };
