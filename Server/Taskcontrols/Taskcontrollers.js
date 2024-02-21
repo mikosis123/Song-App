@@ -19,7 +19,7 @@ module.exports.Postsongs = async (req, res) => {
 module.exports.Updatesongs = async (req, res) => {
   const { id } = req.params;
   const { Title, Artist, Album, Genre } = req.body;
-  Songmodel.findByIdAndUpdate(id, { Title, Artist, Album, Genre })
+  Songmodel.findByIdAndUpdate(id, req.body)
     .then(
       (data) => console.log("Data has been updated successfully"),
       res.status("updated successfuly")
