@@ -4,7 +4,7 @@ const corse = require("cors");
 require("dotenv").config();
 const app = express();
 const routes = require("./routes/Taskroutes");
-app.use(express.json());
+app.use(express.json({ limit: "50mb", extended: true }));
 app.use(corse());
 app.get("/", (req, res) => {
   res.send("Server is running");
