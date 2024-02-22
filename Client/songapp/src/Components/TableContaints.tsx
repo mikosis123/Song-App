@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { baseurl } from "../axios/Baseurl";
+
 import image from "../Components/pexels-elviss-railijs-bitāns-1389429.jpg";
-import Artists from "./Artists";
-import Play from "./Icons/Play";
+
 import { FaPauseCircle, FaPlay, FaPlayCircle } from "react-icons/fa";
 import {
   useUpdateSongMutation,
@@ -16,11 +15,19 @@ interface TableRowProps {
   Album: string;
   Genre: string;
   id: string;
+  Imagefile: string;
 
   onEditClick?: () => void; // Optional prop for handling edit click
 }
 
-const TableContaints = ({ Title, Artist, Album, Genre, id }: TableRowProps) => {
+const TableContaints = ({
+  Title,
+  Artist,
+  Album,
+  Genre,
+  id,
+  Imagefile,
+}: TableRowProps) => {
   const [formData, setFormData] = useState({
     Title: "",
     Artist: "",
@@ -72,7 +79,7 @@ const TableContaints = ({ Title, Artist, Album, Genre, id }: TableRowProps) => {
   return (
     <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th>
-        <img className="h-20 w-20" src={image} alt="" />
+        <img className="h-20 w-20" src={Imagefile || image} alt="" />
       </th>
       {isEditing ? (
         <tbody>
@@ -134,7 +141,11 @@ const TableContaints = ({ Title, Artist, Album, Genre, id }: TableRowProps) => {
           setPlay(!play);
         }}
       >
-        {play ? <FaPlayCircle /> : <FaPauseCircle />}
+        {play ? (
+          <FaPlayCircle className="text-3xl" />
+        ) : (
+          <FaPauseCircle className="text-3xl" />
+        )}
       </th>
       <td className="px-6 py-4 text-xl">{Artist}</td>
       <td className="px-6 py-4 text-xl">{Album}</td>
