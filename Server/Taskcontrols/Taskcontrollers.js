@@ -4,9 +4,15 @@ module.exports.Getsongs = async (req, res) => {
   res.send(songs);
 };
 module.exports.Postsongs = async (req, res) => {
-  const { Title, Artist, Album, Genre } = req.body;
+  const { Title, Artist, Album, Genre, Imagefile } = req.body;
   try {
-    const data = await Songmodel.create({ Title, Artist, Album, Genre });
+    const data = await Songmodel.create({
+      Title,
+      Artist,
+      Album,
+      Genre,
+      Imagefile,
+    });
     console.log("Data has been inserted successfully");
     res.status(200).send(data);
   } catch (err) {
@@ -18,8 +24,8 @@ module.exports.Postsongs = async (req, res) => {
 };
 module.exports.Updatesongs = async (req, res) => {
   const { id } = req.params;
-  const { Title, Artist, Album, Genre } = req.body;
-  Songmodel.findByIdAndUpdate(id, { Title, Artist, Album, Genre })
+  const { Title, Artist, Album, Genre, Imagefile } = req.body;
+  Songmodel.findByIdAndUpdate(id, { Title, Artist, Album, Genre, Imagefile })
     .then(
       (data) => console.log("Data has been updated successfully"),
       res.status("updated successfuly")
@@ -42,24 +48,4 @@ module.exports.Delatesongs = async (req, res) => {
       .status(500)
       .send({ error: err, msg: "Data has not been delated successfully" });
   }
-};
-module.exports.Updatesongs = async (req, res) => {
-  const { task } = req.body;
-  const { id } = req.params.id;
-  Songmodel.findByIdAndUpdate(id, { task })
-    .then(() => res.send("updated successfuly"))
-    .catch(
-      (err) => console.log("Data has not been inserted successfully"),
-      res.send({ error: err, msg: "Data has not been inserted successfully" })
-    );
-};
-module.exports.Deletesongs = async (req, res) => {
-  const { task } = req.body;
-  const { id } = req.params.id;
-  Songmodel.findByIdAndDelete(id, { task })
-    .then(() => res.send("delated successfuly"))
-    .catch(
-      (err) => console.log("Data has not been inserted successfully"),
-      res.send({ error: err, msg: "Data has not been inserted successfully" })
-    );
 };

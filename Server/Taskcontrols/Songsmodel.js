@@ -17,5 +17,8 @@ const songschema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  Imagefile: {
+    type: String,
+  },
 });
 module.exports = mongoose.model("Songs", songschema);
