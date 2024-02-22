@@ -16,6 +16,7 @@ interface Song {
   Artist: string;
   Album: string;
   Genre: string;
+  Imagefile: string;
 }
 const Songs = () => {
   const [songadd, setsongadd] = useState(false);
@@ -24,18 +25,16 @@ const Songs = () => {
     Artist: "",
     Album: "",
     Genre: "",
+    Imagefile: "",
   });
   const { data: songs } = useGetSongQuery(undefined);
   const [createSong, { isLoading }] = useCreateSongMutation();
-  const [updateSong, { isLoading: isUpdating }] = useUpdateSongMutation();
-  const [deleteSong, { isLoading: isDeleting }] = useDeleteSongMutation();
 
   const handleAddSong = () => {
     setsongadd(false);
   };
-
+  console.log(songs);
   const addsong = async (data: any) => {
-    console.log(formData);
     try {
       await createSong(formData);
       setsongadd(!songadd);
@@ -44,6 +43,7 @@ const Songs = () => {
         Artist: "",
         Album: "",
         Genre: "",
+        Imagefile: "",
       });
     } catch (error) {
       console.log(error);
@@ -51,11 +51,26 @@ const Songs = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+    if (name === "Imagefile" && files && files.length > 0) {
+      const Imagefile = files[0];
+      convertToBase64(Imagefile)
+        .then((base64String: any) => {
+          setFormData((prevData) => ({
+            ...prevData,
+            [name]: base64String,
+          }));
+          console.log(base64String);
+        })
+        .catch((error) => {
+          console.log("Error converting image to base64:", error);
+        });
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
   const songAdder = () => {
     setsongadd(!songadd);
@@ -182,8 +197,10 @@ const Songs = () => {
                 </th>
                 <th>
                   <input
-                    className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  "
                     type="file"
+                    name="Imagefile"
+                    id="file-upload"
+                    accept=".jpeg, .png, .jpg"
                     onChange={handleChange}
                   />
                   <label htmlFor="file"></label>
@@ -207,6 +224,7 @@ const Songs = () => {
                 Artist={item.Artist}
                 Album={item.Album}
                 Genre={item.Genre}
+                Imagefile={item?.Imagefile}
               />
             ))}
           </tbody>
@@ -217,3 +235,15 @@ const Songs = () => {
 };
 
 export default Songs;
+function convertToBase64(file: any) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
