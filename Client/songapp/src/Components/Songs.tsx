@@ -17,6 +17,7 @@ interface Song {
   Album: string;
   Genre: string;
   Imagefile: string;
+  audioUrl: string;
 }
 const Songs = () => {
   const [songadd, setsongadd] = useState(false);
@@ -26,10 +27,11 @@ const Songs = () => {
     Album: "",
     Genre: "",
     Imagefile: "",
+    audioUrl: "",
   });
   const { data: songs } = useGetSongQuery(undefined);
   const [createSong, { isLoading }] = useCreateSongMutation();
-
+  console.log(songs);
   const handleAddSong = () => {
     setsongadd(false);
   };
@@ -44,6 +46,7 @@ const Songs = () => {
         Album: "",
         Genre: "",
         Imagefile: "",
+        audioUrl: "",
       });
     } catch (error) {
       console.log(error);
@@ -201,6 +204,16 @@ const Songs = () => {
                     name="Imagefile"
                     id="file-upload"
                     accept=".jpeg, .png, .jpg"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="file"></label>
+                </th>
+                <th>
+                  <input
+                    type="file"
+                    name="audioUrl"
+                    id="file-upload"
+                    accept=".mp3, .wav"
                     onChange={handleChange}
                   />
                   <label htmlFor="file"></label>
