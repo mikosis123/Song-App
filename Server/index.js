@@ -1,17 +1,22 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const corse = require("cors");
-require("dotenv").config();
+import upload from "./Songuploads/multer.js";
+import uploader from "./Songuploads/cloudinaryUploader.js";
+import express from "express";
+import mongoose from "mongoose";
+import corse from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
-const routes = require("./routes/Taskroutes");
+import routes from "./routes/Taskroutes.js";
 app.use(express.json({ limit: "50mb", extended: true }));
 app.use(corse());
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
+
 app.post("/", (req, res) => {
   res.send("Server is running");
 });
+
 mongoose
   .connect(process.env.MONGO_DB)
   .then(() => console.log("connected to db"))
