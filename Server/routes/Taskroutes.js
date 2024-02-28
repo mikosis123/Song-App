@@ -1,14 +1,14 @@
-const { Router } = require("express");
+import Router from "express";
 const router = Router();
-const {
+import upload from "../Songuploads/multer.js";
+import {
   Getsongs,
   Postsongs,
   Updatesongs,
   Delatesongs,
-} = require("../Taskcontrols/Taskcontrollers");
+} from "../Taskcontrols/Taskcontrollers.js";
 router.get("/get", Getsongs);
-router.post("/save", Postsongs);
+router.post("/save", upload, Postsongs);
 router.put("/update/:id", Updatesongs);
 router.delete("/delete/:id", Delatesongs);
-
-module.exports = router;
+export default router;
