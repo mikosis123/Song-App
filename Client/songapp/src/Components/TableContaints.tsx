@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 import image from "../Components/pexels-elviss-railijs-bitāns-1389429.jpg";
@@ -37,7 +36,6 @@ const TableContaints = ({
   console.log(id);
   const [isEditing, setIsEditing] = useState(false);
   const [updateSongMutation] = useUpdateSongMutation();
-  const [deleteSong, { isLoading: isDeleting }] = useDeleteSongMutation();
   const [play, setPlay] = useState(true);
   const handleEditClick = () => {
     setIsEditing(!isEditing);
@@ -93,7 +91,6 @@ const TableContaints = ({
               placeholder="Title"
             />
           </th>
-
           <th>
             <input
               className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -131,8 +128,6 @@ const TableContaints = ({
           className="pr-64 flex  justify-center gap-8 text-2xl px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           {Title}
-          {/* <Play /> */}
-          {/* <i className=" color:blue fa-solid fa-play"></i> */}
         </th>
       )}
       <th
