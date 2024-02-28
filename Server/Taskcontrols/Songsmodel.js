@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const songschema = new mongoose.Schema({
   Title: {
@@ -20,5 +20,11 @@ const songschema = new mongoose.Schema({
   Imagefile: {
     type: String,
   },
+  audioUrl: {
+    type: String,
+  },
 });
-module.exports = mongoose.model("Songs", songschema);
+
+const Songs = mongoose.model("Songs", songschema);
+
+export default Songs;
