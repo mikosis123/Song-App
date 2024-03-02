@@ -1,17 +1,10 @@
 import React from "react";
+import axios from "axios";
 import TableContaints from "./TableContaints";
-
 import { useState, useEffect } from "react";
-
-import {
-  useGetSongQuery,
-  useCreateSongMutation,
-  useUpdateSongMutation,
-  useDeleteSongMutation,
-} from "../Features/song.api";
-
+import { useGetSongQuery, useCreateSongMutation } from "../Features/song.api";
+import { useUploadSongMutation } from "../Features/upload.api";
 interface Song {
-  _id: number;
   Title: string;
   Artist: string;
   Album: string;
@@ -19,9 +12,10 @@ interface Song {
   Imagefile: string;
   audioUrl: string;
 }
+
 const Songs = () => {
   const [songadd, setsongadd] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Song>({
     Title: "",
     Artist: "",
     Album: "",
@@ -29,14 +23,16 @@ const Songs = () => {
     Imagefile: "",
     audioUrl: "",
   });
+
   const { data: songs } = useGetSongQuery(undefined);
   const [createSong, { isLoading }] = useCreateSongMutation();
-  console.log(songs);
+  const [uploadSong, { isLoading: uploadLoading }] = useUploadSongMutation();
+
   const handleAddSong = () => {
     setsongadd(false);
   };
-  console.log(songs);
-  const addsong = async (data: any) => {
+
+  const addsong = async () => {
     try {
       await createSong(formData);
       setsongadd(!songadd);
@@ -53,17 +49,41 @@ const Songs = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
-    if (name === "Imagefile" && files && files.length > 0) {
-      const Imagefile = files[0];
-      convertToBase64(Imagefile)
+
+    if (name === "audioUrl" && files && files.length > 0) {
+      const audioFile = files[0];
+      // console.log(audioFile);
+      try {
+        console.log(audioFile);
+        // setAudioUrl({ audioUrl: audioFile });
+        // console.log(audioUrl);
+        const formAudio = new FormData();
+        formAudio.append("audioUrl", audioFile);
+        const Response = await uploadSong(formAudio);
+        // isLoading = { uploadLoading }
+
+        if ("data" in Response) {
+          console.log("fulfilled", Response.data.audioResponse);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            audioUrl: Response.data.audioResponse,
+          }));
+        } else {
+          console.error("Error response:", Response.error);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (name === "Imagefile" && files && files.length > 0) {
+      const imageFile = files[0];
+      convertToBase64(imageFile)
         .then((base64String: any) => {
           setFormData((prevData) => ({
             ...prevData,
             [name]: base64String,
           }));
-          console.log(base64String);
         })
         .catch((error) => {
           console.log("Error converting image to base64:", error);
@@ -75,6 +95,7 @@ const Songs = () => {
       }));
     }
   };
+
   const songAdder = () => {
     setsongadd(!songadd);
   };
@@ -90,7 +111,7 @@ const Songs = () => {
           Add Song
         </button>
       </div>
-      <div className="relative  shadow-md sm:rounded-lg">
+      <div className="relative shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left  text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -202,13 +223,10 @@ const Songs = () => {
                   <input
                     type="file"
                     name="Imagefile"
-                    id="file-upload"
+                    id="file"
                     accept=".jpeg, .png, .jpg"
                     onChange={handleChange}
                   />
-                  <label htmlFor="file"></label>
-                </th>
-                <th>
                   <input
                     type="file"
                     name="audioUrl"
@@ -216,6 +234,9 @@ const Songs = () => {
                     accept=".mp3, .wav"
                     onChange={handleChange}
                   />
+                  <label htmlFor="file"></label>
+                </th>
+                <th>
                   <label htmlFor="file"></label>
                 </th>
                 <button
