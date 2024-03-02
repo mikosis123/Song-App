@@ -8,14 +8,7 @@ export const Postsongs = async (req, res) => {
   const { Title, Artist, Album, Genre, Imagefile, audioUrl } = req.body;
 
   try {
-    let audioUrl;
-
     // Check if there is an audio file in the request
-    if (req.file) {
-      // Handle audio file upload
-      const audioResponse = await uploader(req, res);
-      audioUrl = audioResponse.secure_url;
-    }
 
     // Create a new song record
     const data = await Songmodel.create({
@@ -36,19 +29,7 @@ export const Postsongs = async (req, res) => {
       .send({ error: err, msg: "Data has not been inserted successfully" });
   }
 };
-export const UploadSong = async (req, res) => {
-  // check for any file validation errors from multer
-  if (req.fileValidationError) {
-    return res
-      .status(400)
-      .json({ message: `File validation error: ${req.fileValidationError}` });
-  }
-  const audioResponse = await uploader(req, res);
 
-  //   send response with audio response from cloudinary
-
-  return res.status(200).json({ audioResponse: audioResponse.secure_url });
-};
 export const Updatesongs = async (req, res) => {
   const { id } = req.params;
   const { Title, Artist, Album, Genre, Imagefile } = req.body;

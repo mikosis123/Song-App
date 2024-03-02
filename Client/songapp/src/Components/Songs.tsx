@@ -31,7 +31,7 @@ const Songs = () => {
   const handleAddSong = () => {
     setsongadd(false);
   };
-
+  console.log(formData);
   const addsong = async () => {
     try {
       await createSong(formData);
