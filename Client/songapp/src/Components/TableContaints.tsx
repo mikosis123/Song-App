@@ -33,7 +33,7 @@ const TableContaints = ({
     Album: "",
     Genre: "",
   });
-  console.log(id);
+
   const [isEditing, setIsEditing] = useState(false);
   const [updateSongMutation] = useUpdateSongMutation();
   const [play, setPlay] = useState(true);
