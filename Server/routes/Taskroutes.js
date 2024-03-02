@@ -8,7 +8,8 @@ import {
   Delatesongs,
 } from "../Taskcontrols/Taskcontrollers.js";
 router.get("/get", Getsongs);
-router.post("/save", upload, Postsongs);
+router.post("/save", Postsongs);
+
 router.put("/update/:id", Updatesongs);
 router.delete("/delete/:id", Delatesongs);
 export default router;

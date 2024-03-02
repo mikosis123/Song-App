@@ -34,7 +34,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-}).single("audio");
+}).single("audioUrl");
 export default upload;
 // The audio can be any name, audio is the file name to use when uploading
 // export the multer upload

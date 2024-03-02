@@ -1,33 +1,30 @@
 import Songmodel from "./Songsmodel.js";
-import upload from "../Songuploads/multer.js";
 import uploader from "../Songuploads/cloudinaryUploader.js";
 export const Getsongs = async (req, res) => {
   const songs = await Songmodel.find();
   res.send(songs);
 };
 export const Postsongs = async (req, res) => {
-  try {
-    // Call the uploader function directly within the controller function
-    const audioResponse = await uploader(req, res);
+  const { Title, Artist, Album, Genre, Imagefile, audioUrl } = req.body;
 
-    // check for any file validation errors from multer
-    if (req.fileValidationError) {
-      return res
-        .status(400)
-        .json({ message: `File validation error: ${req.fileValidationError}` });
+  try {
+    let audioUrl;
+
+    // Check if there is an audio file in the request
+    if (req.file) {
+      // Handle audio file upload
+      const audioResponse = await uploader(req, res);
+      audioUrl = audioResponse.secure_url;
     }
 
-    // Extract data from req.body
-    const { Title, Artist, Album, Genre, Imagefile } = req.body;
-
-    // Create a new song record in the database
+    // Create a new song record
     const data = await Songmodel.create({
       Title,
       Artist,
       Album,
       Genre,
       Imagefile,
-      audioUrl: audioResponse.secure_url, // Assuming audioUrl is the field where you want to store the audio URL
+      audioUrl, // Add the audio URL to the song record
     });
 
     console.log("Data has been inserted successfully");
@@ -38,6 +35,19 @@ export const Postsongs = async (req, res) => {
       .status(500)
       .send({ error: err, msg: "Data has not been inserted successfully" });
   }
+};
+export const UploadSong = async (req, res) => {
+  // check for any file validation errors from multer
+  if (req.fileValidationError) {
+    return res
+      .status(400)
+      .json({ message: `File validation error: ${req.fileValidationError}` });
+  }
+  const audioResponse = await uploader(req, res);
+
+  //   send response with audio response from cloudinary
+
+  return res.status(200).json({ audioResponse: audioResponse.secure_url });
 };
 export const Updatesongs = async (req, res) => {
   const { id } = req.params;

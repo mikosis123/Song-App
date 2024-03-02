@@ -3,19 +3,15 @@ import mongoose from "mongoose";
 const songschema = new mongoose.Schema({
   Title: {
     type: String,
-    required: true,
   },
   Artist: {
     type: String,
-    required: true,
   },
   Album: {
     type: String,
-    required: true,
   },
   Genre: {
     type: String,
-    required: true,
   },
   Imagefile: {
     type: String,
