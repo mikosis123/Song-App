@@ -3,6 +3,7 @@
 
 // import songReducer from "../Features/Slicesong";
 import { songApi } from "../Features/song.api";
+import { uploadApi } from "../Features/upload.api";
 
 // export const store = configureStore({
 //   reducer: {
@@ -21,10 +22,11 @@ import { configureStore } from "@reduxjs/toolkit";
 export const store = configureStore({
   reducer: {
     [songApi.reducerPath]: songApi.reducer,
+    [uploadApi.reducerPath]: uploadApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([songApi.middleware]),
+    getDefaultMiddleware().concat(songApi.middleware, uploadApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
