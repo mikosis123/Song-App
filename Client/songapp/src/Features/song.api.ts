@@ -20,6 +20,7 @@ export const songApi = createApi({
       },
       invalidatesTags: ["song"],
     }),
+
     updateSong: builder.mutation<any, { id: string; data: any }>({
       // Specify the types for id and data
       query: ({ id, data }) => ({
