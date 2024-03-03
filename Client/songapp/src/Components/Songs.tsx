@@ -3,7 +3,11 @@ import axios from "axios";
 import TableContaints from "./TableContaints";
 import { useState, useEffect } from "react";
 import { useGetSongQuery, useCreateSongMutation } from "../Features/song.api";
-import { useUploadSongMutation } from "../Features/upload.api";
+import {
+  useUploadImagerMutation,
+  useUploadSongMutation,
+} from "../Features/upload.api";
+import { FaImages } from "react-icons/fa";
 interface Song {
   Title: string;
   Artist: string;
@@ -27,6 +31,7 @@ const Songs = () => {
   const { data: songs } = useGetSongQuery(undefined);
   const [createSong, { isLoading }] = useCreateSongMutation();
   const [uploadSong, { isLoading: uploadLoading }] = useUploadSongMutation();
+  const [uploadImager, { isLoading: imageLoading }] = useUploadImagerMutation();
 
   const handleAddSong = () => {
     setsongadd(false);
@@ -78,16 +83,25 @@ const Songs = () => {
       }
     } else if (name === "Imagefile" && files && files.length > 0) {
       const imageFile = files[0];
-      convertToBase64(imageFile)
-        .then((base64String: any) => {
-          setFormData((prevData) => ({
-            ...prevData,
-            [name]: base64String,
+      try {
+        // console.log(imageFile);
+        // setAudioUrl({ audioUrl: audioFile });
+        // console.log(audioUrl);
+        const formImage = new FormData();
+        formImage.append("image", imageFile);
+        const ResponseImage = await uploadImager(formImage);
+        // isLoading = { uploadLoading }
+        console.log(ResponseImage);
+        if ("data" in ResponseImage) {
+          console.log("fulfilled", ResponseImage.data.imageResponse);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            Imagefile: ResponseImage.data.imageResponse,
           }));
-        })
-        .catch((error) => {
-          console.log("Error converting image to base64:", error);
-        });
+        } else {
+          console.error("Error response:", Response.error);
+        }
+      } catch (error) {}
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -174,10 +188,12 @@ const Songs = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-gray-200">
+          <tbody className="bg-gray-200 w-full">
             {songadd && (
               <tr>
-                <th></th>
+                <th className="px-6 py-4">
+                  <FaImages />
+                </th>
                 <th>
                   <input
                     className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -188,7 +204,7 @@ const Songs = () => {
                     placeholder="Title"
                   />
                 </th>
-                <th>ff</th>
+
                 <th>
                   <input
                     className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -220,32 +236,49 @@ const Songs = () => {
                   />
                 </th>
                 <th>
+                  <label
+                    htmlFor="file"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block cursor-pointer"
+                  >
+                    image
+                  </label>
                   <input
                     type="file"
                     name="Imagefile"
                     id="file"
                     accept=".jpeg, .png, .jpg"
                     onChange={handleChange}
+                    className="hidden"
                   />
+                  <label
+                    htmlFor="file-upload"
+                    className=" my-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block cursor-pointer"
+                  >
+                    audio
+                  </label>
                   <input
                     type="file"
                     name="audioUrl"
                     id="file-upload"
                     accept=".mp3, .wav"
                     onChange={handleChange}
+                    className="hidden"
                   />
-                  <label htmlFor="file"></label>
                 </th>
                 <th>
-                  <label htmlFor="file"></label>
+                  <button
+                    className={`text-white ${
+                      uploadLoading
+                        ? "bg-gray-500 hover:bg-gray-700"
+                        : "bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br"
+                    }  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center `}
+                    type="button"
+                    onClick={addsong}
+                    disabled={uploadLoading}
+                  >
+                    {uploadLoading ? "Uploading..." : "submit song"}
+                  </button>
                 </th>
-                <button
-                  className="text-white mx-8 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  type="button"
-                  onClick={addsong}
-                >
-                  Add
-                </button>
               </tr>
             )}
           </tbody>
@@ -259,6 +292,7 @@ const Songs = () => {
                 Album={item.Album}
                 Genre={item.Genre}
                 Imagefile={item?.Imagefile}
+                audioUrl={item?.audioUrl}
               />
             ))}
           </tbody>
@@ -269,15 +303,3 @@ const Songs = () => {
 };
 
 export default Songs;
-function convertToBase64(file: any) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
