@@ -106,57 +106,24 @@ const TableContaints = ({
       <th>
         <img className="h-20 w-20" src={Imagefile || image} alt="" />
       </th>
-      {isEditing ? (
-        <tbody>
-          <th>
-            <input
-              className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="Title"
-              value={formData.Title}
-              onChange={handleChange}
-              placeholder="Title"
-            />
-          </th>
-          <th>
-            <input
-              className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="Artist"
-              value={formData.Artist}
-              onChange={handleChange}
-              placeholder="Artist"
-            />
-          </th>
-          <th>
-            <input
-              className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="Album"
-              value={formData.Album}
-              onChange={handleChange}
-              placeholder="Album"
-            />
-          </th>
-          <th>
-            <input
-              className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="Genre"
-              value={formData.Genre}
-              onChange={handleChange}
-              placeholder="Genre"
-            />
-          </th>
-        </tbody>
-      ) : (
-        <th
-          scope="row"
-          className="pr-64 flex  justify-center gap-8 text-2xl px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-        >
-          {Title}
-        </th>
-      )}
+
+      <th
+        scope="row"
+        className=" flex  justify-center gap-8 text-2xl px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+      >
+        {Title}
+        {isEditing && (
+          <input
+            className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="text"
+            name="Title"
+            value={formData.Title}
+            onChange={handleChange}
+            placeholder="Title"
+          />
+        )}
+      </th>
+
       <th
         className="cursor-pointer"
         onClick={() => {
@@ -171,9 +138,45 @@ const TableContaints = ({
         )}
         <audio ref={audioRef} src={audioUrl} />
       </th>
-      <td className="px-6 py-4 text-xl">{Artist}</td>
-      <td className="px-6 py-4 text-xl">{Album}</td>
-      <td className="px-6 py-4 text-xl">{Genre}</td>
+      <td className="px-6 py-4 text-xl">
+        {Artist}
+        {isEditing && (
+          <input
+            className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="text"
+            name="Artist"
+            value={formData.Artist}
+            onChange={handleChange}
+            placeholder="Artist"
+          />
+        )}
+      </td>
+      <td className="px-6 py-4 text-xl">
+        {Album}{" "}
+        {isEditing && (
+          <input
+            className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="text"
+            name="Album"
+            value={formData.Album}
+            onChange={handleChange}
+            placeholder="Album"
+          />
+        )}
+      </td>
+      <td className="px-6 py-4 text-xl">
+        {Genre}
+        {isEditing && (
+          <input
+            className="bg-gray-50 mx-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-[150px] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="text"
+            name="Genre"
+            value={formData.Genre}
+            onChange={handleChange}
+            placeholder="Genre"
+          />
+        )}
+      </td>
       <td className="px-6 py-4 text-right text-xl">
         {isEditing ? (
           <button onClick={handleUpdateSong}>Update</button>
