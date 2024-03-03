@@ -32,18 +32,29 @@ export const Postsongs = async (req, res) => {
 
 export const Updatesongs = async (req, res) => {
   const { id } = req.params;
-  const { Title, Artist, Album, Genre, Imagefile } = req.body;
-  Songmodel.findByIdAndUpdate(id, { Title, Artist, Album, Genre, Imagefile })
-    .then(
-      (data) => console.log("Data has been updated successfully"),
-      res.status("updated successfuly")
-    )
-    .catch(
-      (err) => console.log("Data has not been updated successfully"),
-      res.send("Data has not been updated successfully")
+  const { Title, Artist, Album, Genre, Imagefile, audioUrl } = req.body;
+
+  try {
+    const updatedSong = await Songmodel.findByIdAndUpdate(
+      id,
+      { Title, Artist, Album, Genre, Imagefile, audioUrl },
+      { new: true } // Return the updated document
     );
-  res.send("song updated successfully");
+
+    if (!updatedSong) {
+      return res.status(404).send("Song not found");
+    }
+
+    console.log("Data has been updated successfully");
+    res.status(200).send(updatedSong);
+  } catch (err) {
+    console.log("Error updating song:", err);
+    res
+      .status(500)
+      .send({ error: err, msg: "Data has not been updated successfully" });
+  }
 };
+
 export const Delatesongs = async (req, res) => {
   const { id } = req.params;
   try {
