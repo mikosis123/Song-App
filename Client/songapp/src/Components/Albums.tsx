@@ -30,16 +30,21 @@ const Albums = () => {
   const uniqueArtists = Object.keys(albumSongCounts);
 
   return (
-    <div className="bg-gradient-to-b  overflow-y-auto from-gray-300 to-blue-400 flex gap-4 flex-wrap justify-center items-center h-screen w-full">
-      {uniqueArtists?.map((Album: any) => {
-        return (
-          <AlbumCard
-            key={Album}
-            album={Album}
-            counts={albumSongCounts[Album]}
-          />
-        );
-      })}
+    <div className="bg-white h-screen w-full overflow-hidden overflow-x-auto ">
+      <div className="flex justify-center items-center text-5xl my-10 text-blue-600 font-bold ">
+        Album
+      </div>
+      <div className=" overflow-hidden overflow-x-auto mt-24 flex gap-4 flex-wrap justify-center items-center">
+        {uniqueArtists?.map((Album: any) => {
+          return (
+            <AlbumCard
+              key={Album}
+              album={Album}
+              counts={albumSongCounts[Album]}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
