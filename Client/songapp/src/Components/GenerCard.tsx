@@ -7,27 +7,23 @@ type artistcard = {
 
 const GenerCard = ({ gener, counts }: artistcard) => {
   return (
-    <div>
-      <div className="w-full max-w-sm bg-blue-300 shadow-lg border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="shadow-xl">
+      <div className="w-full max-w-sm bg-[#e5e5e5] shadow-xl border border-gray-300 rounded-lg shadow">
         <a href="#">
           <img className="p-8 rounded-t-lg" src={image} alt="product image" />
         </a>
         <div className="px-5 pb-5">
           <a href="#">
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-              name of the Artists is : {gener}
+              Gener :
+              <span className="text-3xl font-bold text-blue-600"> {gener}</span>
             </h5>
           </a>
-          <div className="flex items-center mt-2.5 mb-5">
-            <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-              total number of songs
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
+
+          <div className="flex items-center justify-end">
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
-              total number of songs
+              <span>{counts}</span> songs
             </span>
-            <span>{counts}</span>
           </div>
         </div>
       </div>
