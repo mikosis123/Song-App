@@ -24,6 +24,11 @@ export const uploadApi = createApi({
         return { url: "uploadAudio", method: "POST", body: data };
       },
     }),
+    uploadImager: builder.mutation<any, any>({
+      query: (data) => {
+        return { url: "uploadImage", method: "POST", body: data };
+      },
+    }),
 
     updateSong: builder.mutation<any, { id: string; data: any }>({
       // Specify the types for id and data
@@ -46,6 +51,7 @@ export const {
   useGetSongQuery,
   useLazyGetSongQuery,
   useCreateSongMutation,
+  useUploadImagerMutation,
   useUploadSongMutation,
   useUpdateSongMutation,
   useDeleteSongMutation,
