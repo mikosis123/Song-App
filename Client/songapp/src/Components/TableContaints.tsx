@@ -15,6 +15,7 @@ interface TableRowProps {
   Genre: string;
   id: string;
   Imagefile: string;
+  audioUrl: string;
 
   onEditClick?: () => void; // Optional prop for handling edit click
 }
@@ -26,17 +27,43 @@ const TableContaints = ({
   Genre,
   id,
   Imagefile,
+  audioUrl,
 }: TableRowProps) => {
   const [formData, setFormData] = useState({
     Title: "",
     Artist: "",
     Album: "",
     Genre: "",
+    Imagefile: "",
+    audioUrl: "",
   });
-
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [updateSongMutation] = useUpdateSongMutation();
-  const [play, setPlay] = useState(true);
+  const [play, setPlay] = useState(false);
+  const audioRef = React.useRef<HTMLAudioElement>(null); // Reference to audio element
+
+  const handleTogglePlay = () => {
+    setPlay(!play); // Toggle play state
+  };
+  const handlePlay = () => {
+    setIsPlaying(true); // Set isPlaying to true to play audio
+  };
+
+  const handlePause = () => {
+    setIsPlaying(false); // Set isPlaying to false to pause audio
+  };
+
+  React.useEffect(() => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      if (play) {
+        audioElement.play(); // If play is true, play the audio
+      } else {
+        audioElement.pause(); // If play is false, pause the audio
+      }
+    }
+  }, [play]); // Run this effect whenever play state changes
   const handleEditClick = () => {
     setIsEditing(!isEditing);
   };
@@ -75,7 +102,7 @@ const TableContaints = ({
   // Only run once when component mounts
 
   return (
-    <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+    <tr className=" bg-[#e5e5e5] border-b hover:bg-white dark:bg-gray-800 dark:border-gray-700">
       <th>
         <img className="h-20 w-20" src={Imagefile || image} alt="" />
       </th>
@@ -134,6 +161,7 @@ const TableContaints = ({
         className="cursor-pointer"
         onClick={() => {
           setPlay(!play);
+          setIsPlaying(!isPlaying);
         }}
       >
         {play ? (
@@ -141,6 +169,7 @@ const TableContaints = ({
         ) : (
           <FaPauseCircle className="text-3xl" />
         )}
+        <audio ref={audioRef} src={audioUrl} />
       </th>
       <td className="px-6 py-4 text-xl">{Artist}</td>
       <td className="px-6 py-4 text-xl">{Album}</td>
