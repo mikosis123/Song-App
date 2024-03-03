@@ -14,7 +14,7 @@ function App() {
       <div className="min-h-screen relative  flex justify-between align-center ">
         <Sidebar />
       </div>
-      <div className="w-[80%] h-[90%]  ">
+      <div className="w-full h-[90%] overflow-y-scroll  ">
         <Routes>
           <Route path="/Artists" element={<Artists />} />
           <Route path="/Songs" element={<Songs />} />
