@@ -37,7 +37,7 @@ export const Updatesongs = async (req, res) => {
   try {
     const updatedSong = await Songmodel.findByIdAndUpdate(
       id,
-      { Title, Artist, Album, Genre, Imagefile, audioUrl },
+      { Title, Artist, Album, Genre },
       { new: true } // Return the updated document
     );
 

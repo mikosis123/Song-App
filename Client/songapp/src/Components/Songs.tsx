@@ -252,7 +252,7 @@ const Songs = () => {
                   />
                   <label
                     htmlFor="file-upload"
-                    className=" my-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block cursor-pointer"
+                    className=" m-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block cursor-pointer"
                   >
                     audio
                   </label>

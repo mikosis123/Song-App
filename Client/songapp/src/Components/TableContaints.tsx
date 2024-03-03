@@ -88,12 +88,17 @@ const TableContaints = ({
   };
   const handleUpdateSong = async () => {
     try {
+      // Extract only the fields that can be updated
+      const { Title, Artist, Album, Genre } = formData;
+
+      // Perform the update with only the allowed fields
       await updateSongMutation({
         id,
-        data: formData,
+        data: { Title, Artist, Album, Genre },
       });
+
       console.log("Song updated successfully");
-      setIsEditing(!isEditing);
+      setIsEditing(false); // Exit edit mode
     } catch (error) {
       console.error("Error updating song:", error);
     }
@@ -179,7 +184,15 @@ const TableContaints = ({
       </td>
       <td className="px-6 py-4 text-right text-xl">
         {isEditing ? (
-          <button onClick={handleUpdateSong}>Update</button>
+          <>
+            <button onClick={handleUpdateSong}>Update</button>
+            <span
+              onClick={() => setIsEditing(!isEditing)}
+              className="font-medium px-6  pb-10 text-blue-600 dark:text-blue-500 cursor-pointer"
+            >
+              x
+            </span>
+          </>
         ) : (
           <>
             <a
