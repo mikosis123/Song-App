@@ -2,9 +2,10 @@ import image from "../Components/pexels-elviss-railijs-bitāns-1389429.jpg";
 
 type artistcard = {
   artist: string;
+  songCount: any;
 };
 
-const ArtistCard = ({ artist }: artistcard) => {
+const ArtistCard = ({ artist, songCount }: artistcard) => {
   return (
     <div>
       <div className="w-full max-w-sm bg-blue-300 shadow-lg border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -26,7 +27,7 @@ const ArtistCard = ({ artist }: artistcard) => {
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
               total number of songs
             </span>
-            <span>25</span>
+            <span>{songCount}</span>
           </div>
         </div>
       </div>
