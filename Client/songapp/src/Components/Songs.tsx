@@ -117,7 +117,9 @@ const Songs = () => {
   return (
     <div className="bg-white w-full h-[100vh]">
       <div className="bg-blue-500 h-[300px] flex justify-center items-center ">
-        <h1 className="text-6xl text-white font-extrabold">List of Songs</h1>
+        <h1 className="text-6xl text-white font-extrabold ml-5">
+          List of Songs
+        </h1>
         <button
           onClick={songAdder}
           className=" mt-auto ml-auto text-white hover:text-black border border-black hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-large rounded-lg text-md px-7 py-3 text-center me-4 mb-4   "
