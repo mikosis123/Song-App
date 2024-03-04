@@ -107,7 +107,7 @@ const TableContaints = ({
   // Only run once when component mounts
 
   return (
-    <tr className=" bg-[#e5e5e5] border-b hover:bg-white dark:bg-gray-800 dark:border-gray-700">
+    <tr className=" bg-[#e5e5e5] border-t border-gray-300 hover:bg-white dark:bg-gray-800 dark:border-gray-700">
       <th>
         <img className="h-20 w-20" src={Imagefile || image} alt="" />
       </th>

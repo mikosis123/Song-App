@@ -122,7 +122,7 @@ const Songs = () => {
         </h1>
         <button
           onClick={songAdder}
-          className=" mt-auto ml-auto text-white hover:text-black border border-black hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-large rounded-lg text-md px-7 py-3 text-center me-4 mb-4   "
+          className=" mt-auto ml-auto text-white hover:text-gray-200 border border-black hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-large rounded-lg text-md px-7 py-3 text-center me-4 mb-4   "
         >
           Add Song
         </button>
