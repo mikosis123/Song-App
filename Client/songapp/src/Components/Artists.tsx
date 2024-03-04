@@ -12,8 +12,7 @@ const Artists = () => {
   const [artistSongCounts, setArtistSongCounts] = useState<ArtistSongCounts>(
     {}
   );
-
-  useEffect(() => {
+  const imageSource = useEffect(() => {
     const countSongsByArtist = () => {
       const counts: ArtistSongCounts = {};
 
