@@ -29,7 +29,7 @@ const Geners = () => {
   const uniqueArtists = Object.keys(generSongCounts);
 
   return (
-    <div className="bg-white h-screen w-full shadow-xl overflow-hidden overflow-x-auto ">
+    <div className="bg-white h-screen w-full shadow-xl  ">
       <div className="flex justify-center items-center text-5xl my-10 text-blue-600 font-bold ">
         Genre
       </div>

@@ -32,11 +32,11 @@ const Artists = () => {
   const uniqueArtists = Object.keys(artistSongCounts);
 
   return (
-    <div className="bg-white h-screen w-full overflow-hidden overflow-x-auto ">
+    <div className="bg-white h-screen w-full  overflow-x-auto ">
       <div className="flex justify-center items-center text-5xl my-10 text-blue-600 font-bold  ">
         Artists
       </div>
-      <div className=" overflow-hidden overflow-x-auto mt-24  flex gap-4 flex-wrap justify-center items-center">
+      <div className="mt-24  flex gap-4 flex-wrap justify-center items-center">
         {uniqueArtists.map((artist) => (
           <ArtistCard
             key={artist}

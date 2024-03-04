@@ -116,7 +116,7 @@ const Songs = () => {
 
   return (
     <div className="bg-white w-full h-[100vh]">
-      <div className="bg-blue-500 h-[300px] flex justify-center items-center ">
+      <div className="bg-blue-500 h-[300px] w-full flex justify-center items-center ">
         <h1 className="text-6xl text-white font-extrabold ml-5">
           List of Songs
         </h1>
@@ -192,7 +192,7 @@ const Songs = () => {
           </thead>
           <tbody className="bg-gray-200 w-full">
             {songadd && (
-              <tr>
+              <tr className="max-w-full">
                 <th className="px-6 py-4">
                   <FaImages />
                 </th>
