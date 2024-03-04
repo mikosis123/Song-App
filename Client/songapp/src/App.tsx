@@ -10,11 +10,11 @@ import Albums from "./Components/Albums";
 
 function App() {
   return (
-    <div className="flex justify-start w-full bg-gradient-to-r from-gray-300 to-gray-200">
+    <div className="flex justify-start w-full bg-white">
       <div className="min-h-screen relative  flex justify-between align-center ">
         <Sidebar />
       </div>
-      <div className="w-full h-[90%] overflow-y-scroll  ">
+      <div className="w-full h-screen overflow-y-scroll">
         <Routes>
           <Route path="/Artists" element={<Artists />} />
           <Route path="/Songs" element={<Songs />} />
