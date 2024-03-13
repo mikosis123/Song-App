@@ -1,23 +1,18 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import dotenv from "dotenv";
 import upload from "./Songuploads/multer.js";
+import uploader from "./Songuploads/cloudinaryUploader.js";
 import uploadImage from "./Songuploads/ImageMulter.js";
+import express from "express";
+
+import mongoose from "mongoose";
+import corse from "cors";
+import dotenv from "dotenv";
+dotenv.config();
+const app = express();
+import routes from "./routes/Taskroutes.js";
 import cloudinaryUploader from "./Songuploads/cloudinaryUploader.js";
 import cloudinaryImage from "./Songuploads/cloudinaryImage.js";
-import routes from "./routes/Taskroutes.js";
-
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Middleware
 app.use(express.json({ limit: "50mb", extended: true }));
-app.use(cors());
-
-// Routes
+app.use(corse());
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
@@ -27,21 +22,16 @@ app.post("/", (req, res) => {
 });
 
 app.post("/uploadAudio", upload, async (req, res) => {
-  // File validation errors
+  // check for any file validation errors from multer
   if (req.fileValidationError) {
     return res
       .status(400)
       .json({ message: `File validation error: ${req.fileValidationError}` });
   }
 
-  try {
-    // Handle upload to Cloudinary
-    const audioResponse = await cloudinaryUploader(req, res);
-    return res.status(200).json({ audioResponse: audioResponse.secure_url });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Error uploading audio" });
-  }
+  const audioResponse = await cloudinaryUploader(req, res);
+  //   send response with audio response from cloudinary
+  return res.status(200).json({ audioResponse: audioResponse.secure_url });
 });
 
 app.post("/uploadImage", uploadImage, async (req, res) => {
@@ -52,25 +42,21 @@ app.post("/uploadImage", uploadImage, async (req, res) => {
   }
 
   try {
+    // invoke the uploader function to handle the upload to cloudinary
     const imageResponse = await cloudinaryImage(req, res);
+    // send response with image response from cloudinary
     return res.status(200).json({ imageResponse: imageResponse.secure_url });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error uploading image" });
   }
 });
-
-// Connect to MongoDB
+const port = 5000;
 mongoose
-  .connect(process.env.MONGO_DB, {})
-  .then(() => {
-    console.log("Connected to MongoDB");
-    // Start the server after successfully connecting to MongoDB
-    app.use("/api", routes);
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);
-  });
+  .connect(process.env.MONGO_DB)
+  .then(() => console.log("connected to db"))
+  .catch((err) => console.log(err));
+app.use("/api", routes);
+app.listen(port, () => {
+  console.log("Server is running on port 5000");
+});
