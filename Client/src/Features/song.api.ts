@@ -5,7 +5,7 @@ export const songApi = createApi({
   refetchOnFocus: true,
   tagTypes: ["song"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/",
+    baseUrl: "https://song-app-server.vercel.app/api/",
   }),
   endpoints: (builder) => ({
     getSong: builder.query<any, any>({
