@@ -1,5 +1,4 @@
 import upload from "./Songuploads/multer.js";
-import uploader from "./Songuploads/cloudinaryUploader.js";
 import uploadImage from "./Songuploads/ImageMulter.js";
 import express from "express";
 
