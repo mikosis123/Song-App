@@ -76,6 +76,7 @@ const Songs = () => {
           }));
         } else {
           console.error("Error response:", Response.error);
+          alert("the file is too large to upload pls upload a smaller file");
         }
       } catch (error) {
         console.error(error);
