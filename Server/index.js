@@ -21,7 +21,6 @@ app.post("/", (req, res) => {
 });
 
 app.post("/uploadAudio", upload, async (req, res) => {
-  // check for any file validation errors from multer
   if (req.fileValidationError) {
     return res
       .status(400)
@@ -29,7 +28,7 @@ app.post("/uploadAudio", upload, async (req, res) => {
   }
 
   const audioResponse = await cloudinaryUploader(req, res);
-  //   send response with audio response from cloudinary
+
   return res.status(200).json({ audioResponse: audioResponse.secure_url });
 });
 
@@ -41,9 +40,8 @@ app.post("/uploadImage", uploadImage, async (req, res) => {
   }
 
   try {
-    // invoke the uploader function to handle the upload to cloudinary
     const imageResponse = await cloudinaryImage(req, res);
-    // send response with image response from cloudinary
+
     return res.status(200).json({ imageResponse: imageResponse.secure_url });
   } catch (error) {
     console.error(error);

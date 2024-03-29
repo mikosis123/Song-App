@@ -24,7 +24,7 @@ const SideMenu = ({ Text, PageComponent, link, OnClick }: MenuChild) => {
         }}
         className={`${
           PageComponent.props.isActive ? "bg-[#279EFF] " : "bg-[#E9E9E9]"
-        } cursor-pointer hoverEffect w-[290px] h-[80px]  mt-6 flex items-center justify-center rounded-[18px] space-x-3`}
+        } cursor-pointer hoverEffect w-[240px] h-[80px]  mt-6 flex items-center justify-center rounded-[18px] space-x-3`}
       >
         {PageComponent}
         <span

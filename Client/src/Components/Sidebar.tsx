@@ -18,7 +18,7 @@ const Sidebar = () => {
   };
   return (
     <div>
-      <div className="bg-[#d6d3d1] my-auto  w-[346px] h-full  rounded-md flex align-center justify-center drop-shadow-2xl">
+      <div className="bg-[#d6d3d1] my-auto  w-[300px] h-full  rounded-md flex align-center justify-center drop-shadow-2xl">
         <div className="flex flex-col align-center justify-center">
           <div>
             <SideMenu
@@ -35,7 +35,7 @@ const Sidebar = () => {
               link={"/Artists"}
               Text="Artists"
               PageComponent={
-                <Platformssvg isActive={activeMenu === "/Artists"} />
+                <Profilesvg isActive={activeMenu === "/Artists"} />
               }
               OnClick={() => handleMenuClick("/Artists")}
             />
@@ -44,7 +44,7 @@ const Sidebar = () => {
           <SideMenu
             link={"/Albums"}
             Text="Albums"
-            PageComponent={<Profilesvg isActive={activeMenu === "/Albums"} />}
+            PageComponent={<Platformssvg isActive={activeMenu === "/Albums"} />}
             OnClick={() => handleMenuClick("/Albums")}
           />
           <SideMenu
